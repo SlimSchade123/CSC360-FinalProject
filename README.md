@@ -6,7 +6,7 @@ This is my clone of temple run.
 
 ## Software Designs Implemented
 
-### Singleton - ``` GameManager ```
+### Singleton - [Game Manager](Assets/Scripts/GameManager.cs)
 
 
 
