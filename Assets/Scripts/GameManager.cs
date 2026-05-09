@@ -4,7 +4,7 @@ public class GameManager : MonoBehaviour
 {
     private static GameManager instance;
     [SerializeField] PlayerController playerController;
-
+    [SerializeField] GroundManager groundManager;
 
     public static GameManager GetInstance()
     {
@@ -15,5 +15,8 @@ public class GameManager : MonoBehaviour
         return GameManager.instance;
     }
 
-    
+    public void SpawnGround()
+    {
+        groundManager.SpawnGround();
+    }
 }
