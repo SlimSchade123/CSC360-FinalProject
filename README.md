@@ -2,7 +2,7 @@
 ## Temple Run
 
 
-This is my clone of temple run. 
+This is my version of temple run using software design principles.
 
 ## Software Designs Implemented
 
