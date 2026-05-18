@@ -4,7 +4,8 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] float MovementDistance = 4f;
+    [SerializeField] float MovementDistance = 11f;
+    [SerializeField] float JumpForce = 5f;
     private Rigidbody rb;
     private bool isGrounded = true;
 
@@ -15,17 +16,18 @@ public class PlayerController : MonoBehaviour
 
     public void OnMove(InputValue input)
     {
-        
-        Vector2 delta = input.Get<Vector2>();
-        if (Mathf.Abs(transform.position.x + delta.x * MovementDistance) <= 4) transform.position += new Vector3(delta.x, 0, 0) * MovementDistance;
+        float delta = input.Get<Vector2>().x;
+        float newX = transform.position.x + (delta * MovementDistance);
+
+        newX = Mathf.Clamp(newX, -MovementDistance, MovementDistance);
+        transform.position = new Vector3(newX, transform.position.y, transform.position.z);
     }
 
     public void OnJump()
     {
         if (isGrounded)
         {
-            Debug.Log("Jumping");
-            rb.AddForce(Vector3.up * 5f, ForceMode.Impulse);
+            rb.AddForce(Vector3.up * JumpForce, ForceMode.Impulse);
             isGrounded = false;
         }
     }

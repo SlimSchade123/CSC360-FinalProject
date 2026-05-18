@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public enum LaneType
@@ -11,21 +12,48 @@ public enum LaneType
 public class LaneManager : MonoBehaviour
 {
     public LaneType laneType;
-    public List<GameObject> obstacles = new List<GameObject>();
+    [SerializeField] List<GameObject> obstacles = new();
+    [SerializeField] List<GameObject> spawnedObstacles = new();
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         
     }
+ 
+    public GameObject? GetRandomObstacle()
+    {
+        if (obstacles.Count == 0) return null;
+        return obstacles[Random.Range(0, obstacles.Count)];
+    }
 
-    public void SpawnLane(float zOffset)
+    public GameObject? GetFirstObstacle()
+    {
+        if (obstacles.Count == 0) return null;
+        return obstacles[0];
+    }
+
+    public void SpawnLane(int depth, GameObject randomObstacle)
     {
         if (obstacles.Count == 0) return;
 
-        float xOffset = (3.33f * (int)laneType) - 3.33f;
-        GameObject newLane = Instantiate(obstacles[Random.Range(0, obstacles.Count)], new Vector3(xOffset, 0, 12.4f), Quaternion.identity, transform);
-
+        float xValue = 0;
+        float zValue = 0;
+        if (spawnedObstacles.Count > 0)
+        {
+            GameObject lastObstacle = spawnedObstacles.Last();
+            xValue = lastObstacle.transform.position.x;
+            zValue = lastObstacle.transform.position.z + 24f;
+        }
+        
+        GameObject newLane = Instantiate(randomObstacle, new Vector3(xValue, 0, zValue), Quaternion.Euler(0, 90, 0), transform);
+        LaneTrigger laneTrigger = newLane.GetComponentInChildren<LaneTrigger>();
+        if (laneTrigger != null)
+        {
+            Debug.Log(depth);
+            laneTrigger.depth = depth;
+        }
+        spawnedObstacles.Add(newLane);
     }
 
     // Update is called once per frame
@@ -33,7 +61,7 @@ public class LaneManager : MonoBehaviour
     {
         foreach (Transform child in transform)
         {
-            child.Translate(5f * Time.deltaTime * -Vector3.forward);
+            child.Translate(GameManager.GetInstance().movementSpeed * Time.deltaTime * Vector3.right);
         }
     }
 }

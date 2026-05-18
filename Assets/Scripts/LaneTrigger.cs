@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class LaneTrigger : MonoBehaviour
 {
+    public bool triggered = false;
+    public int depth;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -16,10 +19,11 @@ public class LaneTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("TRIGGERED");
+        
         if (other.CompareTag("Player"))
         {
-            GameManager.GetInstance().SpawnGround();
+            GameManager.GetInstance().SpawnGround(depth);
+            triggered = true;
         }
     }
 }
