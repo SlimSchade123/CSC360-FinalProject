@@ -22,7 +22,7 @@ Here are all classes associated with this pattern:
 
 - [StateManager](Assets/Scripts/StateManager.cs)
 - [IState](Assets/Scripts/States/IState.cs)
-- [TitleState](Assets/Scripts/States/TitleState.cs)
+- [TitleScreenState](Assets/Scripts/States/TitleScreenState.cs)
 - [GameState](Assets/Scripts/States/GameState.cs)
 
 This pattern is especially helpful for games to switch between different states. For instance, I have a state for when the player is playing the game or when they are on the title screen. It works by having the context (StateManager) handle the current state and switching between them. This means that now at any point I can extend the IState class in order to add a new state.
