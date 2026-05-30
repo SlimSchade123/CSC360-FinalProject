@@ -26,3 +26,7 @@ Here are all classes associated with this pattern:
 - [GameState](Assets/Scripts/States/GameState.cs)
 
 This pattern is especially helpful for games to switch between different states. For instance, I have a state for when the player is playing the game or when they are on the title screen. It works by having the context (StateManager) handle the current state and switching between them. This means that now at any point I can extend the IState class in order to add a new state.
+
+### Facade - [Game Manager](Assets/Scripts/GameManager.cs)
+
+The Facade pattern in this project makes one centralized class that I can call for all of the game functionality. Since it is also a singleton, I use the GameManager instance to reference all of my scripts statically without making all of my scripts static.
