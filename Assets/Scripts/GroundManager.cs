@@ -5,6 +5,7 @@ public class GroundManager : MonoBehaviour
 {
     public int laneDepthCount = 1;
     public List<LaneManager> lanes = new List<LaneManager>();
+    public LaneFactory laneFactory;
 
     // Update is called once per frame
     void Update()
@@ -32,28 +33,6 @@ public class GroundManager : MonoBehaviour
 
     public void SpawnGround()
     {
-        bool validPath = false;
-        laneDepthCount++;
-        for (int i = 0; i < lanes.Count; i++)
-        {
-            LaneManager lane = lanes[i];
-            GameObject? randomObstacle = lane.GetRandomObstacle();
-           
-            if (randomObstacle != null)
-            {
-                if (!randomObstacle.name.Contains("Empty"))
-                {
-                    validPath = true;
-                }
-                if (i == lanes.Count - 1 && !validPath)
-                {
-                    lane.SpawnLane(laneDepthCount, lane.GetFirstObstacle());
-                }
-                else
-                {
-                    lane.SpawnLane(laneDepthCount, randomObstacle);
-                }
-            }
-        }
+        laneFactory.SpawnGround(lanes, ref laneDepthCount);
     }
 }
